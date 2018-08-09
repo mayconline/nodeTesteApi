@@ -1,19 +1,24 @@
 'use strict';
 
 const express = require('express');
+const bodyParser = require('body-parser');
+
 
 const app = express();
 const router = express.Router();
 
-const route = router.get('/', (req, res, next)=> {
+//carrega as Rotas
+const indexRoutes = require('./routes/index-route');
+const productRoutes = require('./routes/product-route');
 
-    res.status(200).send({
-        title:"node teste api",
-        version:"0.0.2"
-    });
+//transforma em json
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:false}));
 
-});
 
-app.use('/', route);
+//executa as rotas
+app.use('/', indexRoutes);
+app.use('/products', productRoutes);
+
 
 module.exports = app;
