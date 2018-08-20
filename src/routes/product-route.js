@@ -2,25 +2,20 @@
 
 const express = require('express');
 const router = express.Router();
+const controller = require('../controllers/product-controller');
+
 
 //Rotas de Crud
-router.post('/', (req, res, next)=>{
+router.post('/', controller.post );
 
-    res.status(201).send(req.body);
-});
+router.put('/:id', controller.put);
 
-router.put('/:id', (req, res, next)=>{
-    const id = req.params.id;
-    res.status(201).send({
-        id: id,
-        item: req.body
-    });
-});
+router.delete('/', controller.delete);
 
-router.delete('/', (req, res, next)=>{
-
-    res.status(200).send(req.body);
-});
+router.get('/', controller.get);
+router.get('/:slug', controller.getBySlug);
+router.get('/admin/:id', controller.getById);
+router.get('/tags/:tags', controller.getByTag);
 //
 
 module.exports = router;
